@@ -1,0 +1,176 @@
+.section {
+  padding-top: var(--section-space);
+}
+
+.inner {
+  width: min(100% - var(--gutter) * 2, var(--container));
+  margin-inline: auto;
+}
+
+.panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: clamp(32px, 4vw, 48px);
+  padding: clamp(20px, 5vw, 72px) clamp(20px, 4vw, 48px);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg);
+}
+
+/* ---------- Left column ---------- */
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.intro {
+  max-width: 48ch;
+  margin-top: -4px;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.card {
+  width: 100%;
+  padding: 24px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--surface);
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background-color: color-mix(in srgb, var(--accent) 30%, var(--surface));
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.name {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.role {
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  color: var(--text);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.detailIcon {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.detailLink {
+  transition: color 0.2s ease;
+}
+
+.detailLink:hover {
+  color: var(--accent);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.action {
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.noteIcon {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+/* ---------- Form card ---------- */
+
+.formCard {
+  padding: clamp(22px, 3vw, 28px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--surface);
+  box-shadow: 0 24px 48px -24px color-mix(in srgb, var(--bg) 90%, transparent);
+}
+
+.formTitle {
+  color: var(--accent);
+  font-size: clamp(1.125rem, 1rem + 0.4vw, 1.25rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.formSubtitle {
+  margin: 4px 0 24px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+@media (max-width: 1024px) {
+  .panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* On phones a card inside a card costs too much width, so the form sits flat in the panel. */
+@media (max-width: 600px) {
+  .formCard {
+    padding: 28px 0 0;
+    border-width: 1px 0 0;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
+}

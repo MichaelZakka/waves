@@ -1,0 +1,125 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 28px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+/* Variants */
+
+.primary {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+.primary:hover {
+  background-color: var(--accent-hover);
+}
+
+.outline {
+  border-color: var(--accent);
+  background-color: transparent;
+  color: var(--accent);
+}
+
+.outline:hover {
+  background-color: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.secondary {
+  border-color: var(--border);
+  background-color: var(--surface-2);
+  color: var(--text);
+}
+
+.secondary:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+}
+
+/* Lets a leading icon sit inside the label. */
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Sizes */
+
+.md {
+  /* default */
+}
+
+.sm {
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 16px;
+  font-size: 11px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* Arrow-in-a-circle sits flush against the right edge of the pill */
+
+.withCircle {
+  padding-right: 6px;
+}
+
+.withCircle.sm {
+  padding-right: 4px;
+}
+
+.circle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--bg);
+  color: var(--accent);
+  transition: transform 0.3s var(--ease-out);
+}
+
+.sm .circle {
+  width: 28px;
+  height: 28px;
+}
+
+.outline .circle {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+.button:hover .circle {
+  transform: rotate(45deg);
+}
+
+.inlineArrow {
+  flex-shrink: 0;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.button:hover .inlineArrow {
+  transform: translateX(3px);
+}

@@ -1,0 +1,110 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+.image {
+  z-index: -2;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+/* Darkens from the bottom-left where the copy sits, and fades into the page below. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to top, var(--bg) 0%, transparent 28%),
+    linear-gradient(
+      to top right,
+      color-mix(in srgb, var(--bg) 94%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 62%, transparent) 42%,
+      color-mix(in srgb, var(--bg) 8%, transparent) 100%
+    ),
+    linear-gradient(to bottom, color-mix(in srgb, var(--bg) 55%, transparent) 0%, transparent 22%);
+}
+
+.inner {
+  width: min(100% - var(--gutter) * 2, var(--container));
+  margin-inline: auto;
+  padding-block: 160px 104px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  max-width: 720px;
+}
+
+.title {
+  color: var(--accent);
+  font-size: clamp(2.25rem, 1.3rem + 3.4vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+
+.title span {
+  display: block;
+}
+
+.subtitle {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--text);
+  font-size: clamp(1rem, 0.95rem + 0.35vw, 1.1875rem);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.actions {
+  margin-top: 8px;
+}
+
+/* Entrance */
+
+.content > * {
+  animation: rise 0.9s var(--ease-out) both;
+}
+
+.content > :nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.content > :nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .inner {
+    padding-block: 140px 72px;
+  }
+
+  .content {
+    gap: 20px;
+  }
+
+  .image {
+    object-position: 60% 30%;
+  }
+}

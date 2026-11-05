@@ -1,0 +1,58 @@
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 760px;
+}
+
+.center {
+  align-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background-color: var(--accent);
+}
+
+.title {
+  color: var(--accent);
+  font-size: clamp(1.875rem, 1.2rem + 2.2vw, 2.5rem);
+  line-height: 1.12;
+}
+
+.uppercase {
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.light {
+  color: var(--text);
+}
+
+.title em {
+  color: var(--accent);
+  font-style: normal;
+}
+
+.subtitle {
+  max-width: 60ch;
+  color: var(--text-muted);
+  font-size: 1.0625rem;
+}

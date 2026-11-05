@@ -1,0 +1,105 @@
+.section {
+  padding-top: var(--section-space);
+}
+
+.inner {
+  width: min(100% - var(--gutter) * 2, var(--container));
+  margin-inline: auto;
+}
+
+.panel {
+  padding: clamp(40px, 6vw, 72px) clamp(20px, 4vw, 40px);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg);
+}
+
+.header {
+  margin-bottom: 56px;
+}
+
+.header p:last-child {
+  max-width: 62ch;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 360px;
+  padding: 32px 24px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background-color: var(--surface);
+  transition: border-color 0.3s ease;
+}
+
+.card:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+/* Dimmed gold so the titles lead; still 3:1+ as large text. */
+.number {
+  margin-bottom: 8px;
+  color: color-mix(in srgb, var(--accent) 65%, var(--surface));
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.title {
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.text {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    margin-bottom: 40px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .card {
+    min-height: 0;
+  }
+}

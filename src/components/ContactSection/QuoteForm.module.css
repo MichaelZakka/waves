@@ -1,0 +1,265 @@
+/* Columns respond to the form's own width (it sits in a card that changes size a lot). */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  container-type: inline-size;
+}
+
+.grid,
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+.split {
+  grid-column: 1 / -1;
+}
+
+@container (min-width: 420px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 480px) {
+  .split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.label {
+  color: var(--text);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.required {
+  color: var(--accent);
+}
+
+.optional {
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ---------- Inputs ---------- */
+
+.input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background-color: var(--surface-2);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.4;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+.input:hover {
+  border-color: color-mix(in srgb, var(--text-muted) 35%, var(--border));
+}
+
+/* The gold border + glow is the focus indicator, so the default outline can go. */
+.input:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.input[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 22%, transparent);
+}
+
+.input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.selectWrap {
+  position: relative;
+}
+
+.select {
+  padding-inline: 14px 40px;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select option {
+  background-color: var(--surface-2);
+  color: var(--text);
+}
+
+.selectIcon {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  color: var(--text-muted);
+  translate: 0 -50%;
+  pointer-events: none;
+}
+
+.error {
+  color: var(--danger);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* ---------- Service pills ---------- */
+
+.fieldset {
+  min-width: 0;
+}
+
+.legend {
+  margin-bottom: 12px;
+}
+
+.pills {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background-color: var(--surface-2);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.pill:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+}
+
+.pill[data-checked="true"] {
+  border-color: var(--accent);
+  background-color: color-mix(in srgb, var(--accent) 12%, var(--surface-2));
+}
+
+.pill:has(.pillInput:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* The real checkbox covers the pill invisibly, so clicks and keyboard focus work natively. */
+.pillInput {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: inherit;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.pillDot {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--accent) 35%, var(--surface-2));
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pill[data-checked="true"] .pillDot {
+  background-color: var(--accent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+/* ---------- Submit ---------- */
+
+.submit {
+  margin-top: 4px;
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  box-shadow: 0 0 24px -4px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+/* ---------- Success message ---------- */
+
+.success {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: var(--radius-sm);
+  background-color: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.success svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--accent);
+}
+
+/* Stays in the DOM (so screen readers announce it) but takes no space, or flex gap, until it has text. */
+.success:empty {
+  position: absolute;
+  padding: 0;
+  border: 0;
+}
+
+/* Touch screens: 16px inputs stop iOS Safari zooming in on focus. */
+@media (max-width: 768px) {
+  .input {
+    font-size: 1rem;
+  }
+}
+
+@container (max-width: 420px) {
+  .pills {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

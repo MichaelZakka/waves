@@ -1,40 +1,97 @@
+/* ==========================================================================
+   Design tokens
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #121212;
+  --surface: #1c1c1c;
+  --surface-2: #242424;
+  --border: #2e2e2e;
+  --accent: #E8B923;
+  --accent-hover: #f5c93a;
+  --text: #ffffff;
+  --text-muted: #a3a3a3;
+  --danger: #f87171;
+  --page: #1c1b1b;
+  --page-bg: linear-gradient(to right, #1c1c1c, #535353);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  --container: 1200px;
+  --gutter: 24px;
+  --section-space: 120px;
+  --nav-offset: 104px;
+
+  --font-sans: var(--font-manrope), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (max-width: 768px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --gutter: 20px;
+    --section-space: 88px;
+    --nav-offset: 92px;
   }
 }
 
+@media (max-width: 480px) {
+  :root {
+    --gutter: 16px;
+    --section-space: 72px;
+  }
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background-color: var(--page);
+  color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
 
 a {
@@ -42,8 +99,115 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
+ul,
+ol {
+  list-style: none;
+}
+
+fieldset {
+  border: 0;
+  min-width: 0;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+/* ==========================================================================
+   Accessibility
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+main:focus {
+  outline: none;
+}
+
+[id] {
+  scroll-margin-top: var(--nav-offset);
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  background-color: var(--accent);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  transform: translateY(-160%);
+  transition: transform 0.2s var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* ==========================================================================
+   Scroll reveal (driven by components/ScrollReveal)
+   ========================================================================== */
+
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s var(--ease-out),
+    transform 0.8s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
   html {
-    color-scheme: dark;
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
   }
 }
