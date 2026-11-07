@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# admin dashboard: edited content, its history and uploaded images
+/storage
+
+# example environment file is safe to commit
+!.env.example

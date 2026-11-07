@@ -1,14 +1,16 @@
 import type { CSSProperties } from "react";
-import { infoItems, stats } from "@/data/content";
+import { getContent } from "@/lib/content";
 import styles from "./Stats.module.css";
 
-export default function Stats() {
+export default async function Stats() {
+  const { infoItems, stats } = (await getContent()).home;
+
   return (
     <section className={styles.section} aria-label="Company highlights">
       <div className={styles.strip}>
         <dl className={styles.info}>
-          {infoItems.map(({ label, value }) => (
-            <div key={label} className={styles.infoItem}>
+          {infoItems.map(({ label, value }, index) => (
+            <div key={index} className={styles.infoItem}>
               <dt className={styles.infoLabel}>{label}</dt>
               <dd className={styles.infoValue}>{value}</dd>
             </div>
@@ -19,7 +21,7 @@ export default function Stats() {
       <div className={styles.inner}>
         <ul className={styles.stats}>
           {stats.map(({ value, label, caption }, index) => (
-            <li key={label} className={styles.stat}>
+            <li key={index} className={styles.stat}>
               {/* Reveal the content, not the cell, so the divider grid never flashes through. */}
               <div
                 className={styles.statBody}

@@ -52,7 +52,9 @@
 }
 
 .link:hover,
-.link[aria-expanded="true"] {
+.link[aria-expanded="true"],
+.link[aria-current="page"],
+.link[data-active="true"] {
   color: var(--accent);
 }
 
@@ -238,7 +240,8 @@
   transition: color 0.2s ease;
 }
 
-.mobileLink:hover {
+.mobileLink:hover,
+.mobileLink[aria-current="page"] {
   color: var(--accent);
 }
 

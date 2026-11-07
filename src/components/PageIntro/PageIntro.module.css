@@ -1,0 +1,77 @@
+/* Clears the floating navbar, since this page has no photo hero. */
+.section {
+  padding-top: calc(var(--nav-offset) + 48px);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: min(100% - var(--gutter) * 2, 760px);
+  margin-inline: auto;
+  padding: 40px 24px;
+  border-radius: var(--radius-lg);
+  /* Soft gold glow behind the heading. */
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--accent) 10%, transparent) 0%,
+    transparent 70%
+  );
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent);
+}
+
+.title {
+  color: var(--accent);
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.text {
+  max-width: 52ch;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.inner > * {
+  animation: rise 0.9s var(--ease-out) both;
+}
+
+.inner > :nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.inner > :nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

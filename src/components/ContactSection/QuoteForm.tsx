@@ -4,6 +4,7 @@ import { useId, useState, type ChangeEvent, type FormEvent, type ReactNode } fro
 import { ChevronDown, ChevronsRight, CircleCheck } from "lucide-react";
 import Button from "@/components/ui/Button/Button";
 import { eventTypes, serviceOptions } from "@/data/content";
+import { emailHref } from "@/lib/content/links";
 import { cx } from "@/lib/cx";
 import styles from "./QuoteForm.module.css";
 
@@ -20,6 +21,24 @@ type QuoteFormData = {
 
 type TextField = Exclude<keyof QuoteFormData, "services">;
 type FieldErrors = Partial<Record<TextField, string>>;
+
+/** Turns the inquiry into a mailto: link addressed to the team, with every field filled in. */
+function inquiryMailto(to: string, data: QuoteFormData) {
+  const subject = `Quote request: ${data.eventType} – ${data.fullName}`;
+  const body = [
+    `Full name: ${data.fullName}`,
+    `Company: ${data.company || "—"}`,
+    `Email: ${data.email}`,
+    `Phone: ${data.phone}`,
+    `Event type: ${data.eventType}`,
+    `Estimated event date: ${data.eventDate || "—"}`,
+    `Required services: ${data.services.join(", ") || "—"}`,
+    "",
+    "Event details & venue specs:",
+    data.details || "—",
+  ].join("\n");
+  return `${emailHref(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
 const initialData: QuoteFormData = {
   fullName: "",
@@ -98,7 +117,8 @@ function Field({ id, label, required, optional, error, className, children }: Fi
   );
 }
 
-export default function QuoteForm() {
+/** `email` is the inbox inquiries are addressed to. */
+export default function QuoteForm({ email }: { email: string }) {
   const uid = useId();
   const [data, setData] = useState<QuoteFormData>(initialData);
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -145,8 +165,9 @@ export default function QuoteForm() {
       return;
     }
 
-    // TODO: send to an API route or email service once one is set up.
-    console.log("Quote inquiry", {
+    // No backend yet, so hand the inquiry to the visitor's email app, addressed to the team.
+    // TODO: post to an API route or email service instead once one is set up.
+    window.location.href = inquiryMailto(email, {
       ...data,
       fullName: data.fullName.trim(),
       company: data.company.trim(),
@@ -301,7 +322,11 @@ export default function QuoteForm() {
         {submitted && (
           <>
             <CircleCheck size={18} aria-hidden="true" />
-            <span>Thank you! Your inquiry has been received and our team will be in touch shortly.</span>
+            <span>
+              Your email app should now open with your inquiry filled in. Press send there to
+              reach our team. If nothing opened, email us at{" "}
+              <a href={emailHref(email)}>{email}</a>.
+            </span>
           </>
         )}
       </p>

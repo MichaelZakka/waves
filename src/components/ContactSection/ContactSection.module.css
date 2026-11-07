@@ -135,6 +135,46 @@
   color: var(--accent);
 }
 
+/* ---------- Map (Contact page) ---------- */
+
+.map {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-2);
+}
+
+.mapFrame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  /* Darken the default light map so it sits in the dark theme. */
+  filter: grayscale(0.4) invert(0.9) hue-rotate(180deg);
+}
+
+.mapLabel {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background-color: color-mix(in srgb, var(--bg) 85%, transparent);
+  color: var(--text);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mapLabel svg {
+  color: var(--accent);
+}
+
 /* ---------- Form card ---------- */
 
 .formCard {

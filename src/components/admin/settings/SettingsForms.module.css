@@ -1,0 +1,164 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 520px;
+}
+
+.field {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inline {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.label {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background-color: var(--surface-2);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.input:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.hint {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.strength {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.meter {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.meter span {
+  width: 22px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--surface-2);
+}
+
+.strength[data-level="0"] {
+  color: var(--danger);
+}
+
+.strength[data-level="1"] {
+  color: var(--danger);
+}
+
+.strength[data-level="1"] .meter span:nth-child(1),
+.strength[data-level="2"] .meter span:nth-child(-n + 2),
+.strength[data-level="3"] .meter span {
+  background-color: currentColor;
+}
+
+.strength[data-level="2"] {
+  color: var(--accent);
+}
+
+.strength[data-level="3"] {
+  color: var(--success);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 700;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.primary {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+}
+
+.secondary {
+  border: 1px solid var(--border);
+  background-color: var(--surface-2);
+  color: var(--text);
+}
+
+.secondary:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.primary:disabled,
+.secondary:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.result {
+  font-size: 13px;
+}
+
+.result:empty {
+  display: none;
+}
+
+.success {
+  color: var(--success);
+}
+
+.failure {
+  color: var(--danger);
+}
+
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

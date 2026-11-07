@@ -1,0 +1,4 @@
+/* The contact section brings its own top spacing; pull it closer to the intro. */
+.body {
+  margin-top: calc(32px - var(--section-space));
+}

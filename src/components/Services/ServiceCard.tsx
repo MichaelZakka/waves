@@ -1,18 +1,16 @@
-import Image from "next/image";
 import Button from "@/components/ui/Button/Button";
-import type { Service } from "@/data/content";
+import SiteImage from "@/components/ui/SiteImage/SiteImage";
+import { serviceHref } from "@/lib/content/links";
+import type { Service } from "@/lib/content/schema";
 import styles from "./ServiceCard.module.css";
 
 export default function ServiceCard({ service }: { service: Service }) {
-  const { id, title, description, image, href } = service;
+  const { slug, title, description, image } = service;
 
   return (
-    <article id={id} className={styles.card}>
-      <Image
-        src={image.src}
-        alt={image.alt}
-        fill
-        placeholder="blur"
+    <article id={slug} className={styles.card}>
+      <SiteImage
+        image={image}
         sizes="(max-width: 640px) 100vw, (max-width: 1248px) 50vw, 600px"
         className={styles.image}
       />
@@ -22,7 +20,7 @@ export default function ServiceCard({ service }: { service: Service }) {
         <h3 className={styles.title}>{title}</h3>
         <p className={styles.description}>{description}</p>
         <Button
-          href={href}
+          href={serviceHref(service)}
           size="sm"
           arrow="inline"
           className={styles.cta}

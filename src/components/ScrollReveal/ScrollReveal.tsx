@@ -9,18 +9,7 @@ import { useEffect } from "react";
  */
 export default function ScrollReveal() {
   useEffect(() => {
-    const targets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-    if (targets.length === 0 || !("IntersectionObserver" in window)) return;
-
-    // Anything already on screen shows straight away instead of blinking out and back in.
-    const viewportHeight = window.innerHeight;
-    for (const el of targets) {
-      const { top, bottom } = el.getBoundingClientRect();
-      if (top < viewportHeight && bottom > 0) el.classList.add("is-visible");
-    }
-
-    const root = document.documentElement;
-    root.classList.add("reveal-ready");
+    if (!("IntersectionObserver" in window)) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -33,12 +22,39 @@ export default function ScrollReveal() {
       { rootMargin: "0px 0px -10% 0px", threshold: 0.1 },
     );
 
-    for (const el of targets) {
-      if (!el.classList.contains("is-visible")) observer.observe(el);
+    function track(targets: HTMLElement[]) {
+      // Anything already on screen shows straight away instead of blinking out and back in.
+      const viewportHeight = window.innerHeight;
+      for (const el of targets) {
+        if (el.classList.contains("is-visible")) continue;
+        const { top, bottom } = el.getBoundingClientRect();
+        if (top < viewportHeight && bottom > 0) el.classList.add("is-visible");
+        else observer.observe(el);
+      }
     }
+
+    track(Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]")));
+
+    // Content that streams in after hydration (e.g. pages rendered on demand).
+    const mutations = new MutationObserver((records) => {
+      const added: HTMLElement[] = [];
+      for (const record of records) {
+        for (const node of record.addedNodes) {
+          if (!(node instanceof HTMLElement)) continue;
+          if (node.matches("[data-reveal]")) added.push(node);
+          added.push(...node.querySelectorAll<HTMLElement>("[data-reveal]"));
+        }
+      }
+      if (added.length) track(added);
+    });
+    mutations.observe(document.body, { childList: true, subtree: true });
+
+    const root = document.documentElement;
+    root.classList.add("reveal-ready");
 
     return () => {
       observer.disconnect();
+      mutations.disconnect();
       root.classList.remove("reveal-ready");
     };
   }, []);

@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Professional Waves
 
-## Getting Started
+Website for Professional Waves, a UAE event production company (audio, video & LED,
+lighting, technical support). Built with Next.js 16 (App Router), TypeScript and CSS Modules.
 
-First, run the development server:
+## Running it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # then set ADMIN_PASSWORD
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Production: `npm run build && npm start`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Admin dashboard
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Sign in at **`/admin`** with `ADMIN_PASSWORD` to edit the site without touching code:
 
-## Learn More
+| Section           | What you can change                                                                 |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| Home page         | Hero image (upload, framing, zoom, height), headline, highlights, stats, section texts |
+| About page        | Hero and section images and texts; add/remove Experience cards                      |
+| Services          | Add, remove and reorder services; each service's card, page texts and photo gallery |
+| Works             | Add/remove projects with their details and photos                                   |
+| Contact & socials | Contact person, phone, email, website, map location, social media links            |
+| Website health    | Live check of every page, content issues to fix, storage, security and server status |
+| Login settings    | Change the admin password, session length, sign out other devices, recent sign-ins |
 
-To learn more about Next.js, take a look at the following resources:
+Saved changes go live immediately. Every save is validated first, and the previous 30
+versions are kept in `storage/history/` in case something needs rolling back by hand.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Uploaded images are auto-rotated, scaled to at most 2400px and stored as WebP. For each
+image you can choose to fill the frame or show the whole picture, zoom, and click the
+preview to set the point that stays in view when cropping.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Signing in
 
-## Deploy on Vercel
+The first password comes from `ADMIN_PASSWORD`. Once it's changed under **Login settings**, the
+new one is stored as a salted hash in `storage/settings/admin-auth.json` and `ADMIN_PASSWORD`
+is no longer used. If that password is forgotten, delete that file and `ADMIN_PASSWORD` works
+again. After 5 wrong passwords within 15 minutes, that network address is blocked for 15 minutes.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Environment variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Variable               | Required | Purpose                                                                 |
+| ---------------------- | -------- | ----------------------------------------------------------------------- |
+| `ADMIN_PASSWORD`       | Yes      | First password for `/admin`, until one is set in Login settings.        |
+| `ADMIN_SESSION_SECRET` | No       | Signs login sessions. Defaults to a random key stored with the settings. |
+| `CONTENT_DIR`          | No       | Where content, uploads and settings are saved. Defaults to `./storage`. |
+| `SITE_URL`             | No       | Public address checked by Website health. Defaults to the admin's address. |
+
+### Hosting note
+
+Content and uploads are saved as files (`storage/site-content.json`, `storage/uploads/`),
+so the site needs a host with a **persistent disk**: a VPS, a Docker volume, or a Node host
+with disk storage. Point `CONTENT_DIR` at that disk and back it up.
+
+Serverless hosts such as Vercel don't keep files between requests. To host there, swap the
+two file-based implementations in `src/lib/content/storage.ts` for a database and cloud image
+storage. The rest of the app only talks to those interfaces.
+
+## Where things are
+
+- `src/app/(site)/`: the public pages
+- `src/app/admin/`: the dashboard, its login and its Server Actions
+- `src/lib/content/`: content schema (validation), default content, storage
+- `src/data/content.ts`: fixed settings that aren't edited in the admin (menus, form options)
+- `public/images/`: the original photos used by the default content

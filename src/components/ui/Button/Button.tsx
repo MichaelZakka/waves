@@ -1,4 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
+import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { cx } from "@/lib/cx";
 import styles from "./Button.module.css";
@@ -60,8 +61,17 @@ export default function Button({
   );
 
   if (typeof rest.href === "string") {
+    const { href, ...anchorProps } = rest as LinkButtonProps;
+    // Routes inside the site go through next/link; tel:, mailto: and #hash stay plain anchors.
+    if (href.startsWith("/")) {
+      return (
+        <Link href={href} className={classes} {...anchorProps}>
+          {content}
+        </Link>
+      );
+    }
     return (
-      <a className={classes} {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}>
+      <a href={href} className={classes} {...anchorProps}>
         {content}
       </a>
     );

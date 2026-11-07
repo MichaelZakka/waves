@@ -2,18 +2,26 @@ import type { CSSProperties } from "react";
 import { AlarmClock, Globe, Mail, MapPin, MessageSquare, Phone } from "lucide-react";
 import Button from "@/components/ui/Button/Button";
 import SectionHeading from "@/components/ui/SectionHeading/SectionHeading";
-import { contact } from "@/data/content";
+import { getContent } from "@/lib/content";
+import { emailHref, mapEmbedSrc, phoneHref } from "@/lib/content/links";
 import QuoteForm from "./QuoteForm";
 import styles from "./ContactSection.module.css";
 
-const details = [
-  { icon: Phone, label: contact.phone, href: contact.phoneHref },
-  { icon: Mail, label: contact.email, href: contact.emailHref },
-  { icon: Globe, label: contact.website, href: contact.websiteHref },
-  { icon: MapPin, label: contact.location },
-];
+type ContactSectionProps = {
+  /** "page" (the Contact page) swaps the call/quote buttons for a location map. */
+  variant?: "section" | "page";
+};
 
-export default function ContactSection() {
+export default async function ContactSection({ variant = "section" }: ContactSectionProps) {
+  const { contact, home } = await getContent();
+  const copy = home.contact;
+  const details = [
+    { icon: Phone, label: contact.phone, href: phoneHref(contact.phone) },
+    { icon: Mail, label: contact.email, href: emailHref(contact.email) },
+    { icon: Globe, label: contact.website, href: contact.websiteUrl || undefined },
+    { icon: MapPin, label: contact.location },
+  ].filter((detail) => detail.label);
+
   return (
     <section id="contact" className={styles.section} aria-labelledby="contact-title">
       <div className={styles.inner}>
@@ -21,19 +29,16 @@ export default function ContactSection() {
           <div className={styles.info} data-reveal>
             <SectionHeading
               id="contact-title"
-              eyebrow="Direct Production Inquiry"
+              eyebrow={copy.eyebrow}
               title={
                 <>
-                  Let&rsquo;s Create Something <em>Extraordinary</em>
+                  {copy.titleStart} <em>{copy.titleHighlight}</em>
                 </>
               }
               tone="light"
               uppercase={false}
             />
-            <p className={styles.intro}>
-              Tell us about your upcoming event and the audio, video, lighting, or technical
-              support you need. Our team will be happy to discuss your requirements.
-            </p>
+            <p className={styles.intro}>{copy.intro}</p>
 
             <div className={styles.card}>
               <div className={styles.person}>
@@ -69,21 +74,44 @@ export default function ContactSection() {
               </ul>
             </div>
 
-            <div className={styles.actions}>
-              <Button href={contact.phoneHref} variant="secondary" size="sm" className={styles.action}>
-                <Phone size={12} aria-hidden="true" />
-                Call Us
-              </Button>
-              <Button href="#quote" size="sm" className={styles.action}>
-                <MessageSquare size={12} aria-hidden="true" />
-                Get in Touch
-              </Button>
-            </div>
+            {variant === "section" && (
+              <div className={styles.actions}>
+                <Button
+                  href={phoneHref(contact.phone)}
+                  variant="secondary"
+                  size="sm"
+                  className={styles.action}
+                >
+                  <Phone size={12} aria-hidden="true" />
+                  {copy.callLabel}
+                </Button>
+                <Button href="#quote" size="sm" className={styles.action}>
+                  <MessageSquare size={12} aria-hidden="true" />
+                  {copy.quoteLabel}
+                </Button>
+              </div>
+            )}
 
             <p className={styles.note}>
               <AlarmClock size={14} className={styles.noteIcon} aria-hidden="true" />
-              Typical RFP &amp; technical quote turnaround: within 4 hours
+              {copy.note}
             </p>
+
+            {variant === "page" && (
+              <div className={styles.map}>
+                <iframe
+                  title={`Map of ${contact.mapQuery}`}
+                  src={mapEmbedSrc(contact.mapQuery)}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className={styles.mapFrame}
+                />
+                <span className={styles.mapLabel}>
+                  <MapPin size={12} aria-hidden="true" />
+                  {contact.location}
+                </span>
+              </div>
+            )}
           </div>
 
           <div
@@ -92,11 +120,9 @@ export default function ContactSection() {
             data-reveal
             style={{ "--reveal-delay": "120ms" } as CSSProperties}
           >
-            <h3 className={styles.formTitle}>Request a Quote</h3>
-            <p className={styles.formSubtitle}>
-              Fill in your production details below for immediate technical feasibility review.
-            </p>
-            <QuoteForm />
+            <h3 className={styles.formTitle}>{copy.formTitle}</h3>
+            <p className={styles.formSubtitle}>{copy.formSubtitle}</p>
+            <QuoteForm email={contact.email} />
           </div>
         </div>
       </div>

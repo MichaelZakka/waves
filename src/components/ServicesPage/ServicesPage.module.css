@@ -1,0 +1,59 @@
+/* Clears the floating navbar, since this page has no photo hero. */
+.section {
+  padding-top: calc(var(--nav-offset) + 56px);
+}
+
+.inner {
+  width: min(100% - var(--gutter) * 2, var(--container));
+  margin-inline: auto;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 48px;
+  margin-bottom: 48px;
+}
+
+.title {
+  color: var(--accent);
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.25rem);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  margin-top: 4px;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.aside {
+  max-width: 44ch;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.item {
+  display: flex;
+}
+
+@media (max-width: 640px) {
+  .header {
+    margin-bottom: 36px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}

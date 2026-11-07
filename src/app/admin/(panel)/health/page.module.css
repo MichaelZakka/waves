@@ -1,0 +1,132 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title {
+  color: var(--text);
+  font-size: 26px;
+}
+
+.intro {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--surface);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.banner[data-severity="ok"] {
+  border-color: color-mix(in srgb, var(--success) 45%, var(--border));
+}
+
+.banner[data-severity="warning"] {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+}
+
+.banner[data-severity="problem"] {
+  border-color: color-mix(in srgb, var(--danger) 55%, var(--border));
+  background-color: color-mix(in srgb, var(--danger) 8%, var(--surface));
+}
+
+.empty {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.checks,
+.issues {
+  display: flex;
+  flex-direction: column;
+}
+
+.check {
+  display: grid;
+  grid-template-columns: 20px minmax(140px, 200px) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.check:last-child,
+.issue:last-child {
+  border-bottom: 0;
+}
+
+.checkLabel {
+  color: var(--text-muted);
+}
+
+.checkValue {
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.detail {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.issue {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.issueText {
+  flex: 1;
+  min-width: 0;
+  color: var(--text);
+}
+
+.issueWhere {
+  display: block;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.fix {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 4px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.fix:hover {
+  border-color: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .check {
+    grid-template-columns: 20px minmax(0, 1fr);
+  }
+
+  .checkValue {
+    grid-column: 2;
+  }
+}

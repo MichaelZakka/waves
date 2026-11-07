@@ -1,17 +1,22 @@
+import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import Logo from "@/components/ui/Logo/Logo";
-import { capabilities, contact, footerExplore, legalLinks } from "@/data/content";
+import { capabilities, footerExplore, legalLinks } from "@/data/content";
+import { getContent } from "@/lib/content";
+import { emailHref, phoneHref } from "@/lib/content/links";
 import styles from "./Footer.module.css";
 
-export default function Footer() {
+export default async function Footer() {
+  const { contact } = await getContent();
+
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.brand}>
-            <a href="#top" className={styles.logoLink} aria-label="Professional Waves home">
+            <Link href="/" className={styles.logoLink} aria-label="Professional Waves home">
               <Logo size={72} />
-            </a>
+            </Link>
             <p className={styles.description}>
               United Arab Emirates&rsquo; premier hub for audio, video, and lighting production,
               delivering turnkey technical solutions for concerts, conferences and exhibitions.
@@ -29,9 +34,9 @@ export default function Footer() {
             <ul className={styles.list}>
               {footerExplore.map(({ label, href }) => (
                 <li key={label}>
-                  <a href={href} className={styles.link}>
+                  <Link href={href} className={styles.link}>
                     {label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -55,11 +60,11 @@ export default function Footer() {
                 <p className={styles.contactName}>{contact.name}</p>
                 <p className={styles.contactRole}>{contact.role}</p>
               </div>
-              <a href={contact.phoneHref} className={styles.contactRow}>
+              <a href={phoneHref(contact.phone)} className={styles.contactRow}>
                 <Phone size={15} aria-hidden="true" />
                 {contact.phone}
               </a>
-              <a href={contact.emailHref} className={styles.contactRow}>
+              <a href={emailHref(contact.email)} className={styles.contactRow}>
                 <Mail size={15} aria-hidden="true" />
                 {contact.email}
               </a>
@@ -76,9 +81,13 @@ export default function Footer() {
           <ul className={styles.legal}>
             {legalLinks.map(({ label, href }) => (
               <li key={label}>
-                <a href={href} className={styles.link}>
-                  {label}
-                </a>
+                {href ? (
+                  <Link href={href} className={styles.link}>
+                    {label}
+                  </Link>
+                ) : (
+                  label
+                )}
               </li>
             ))}
           </ul>

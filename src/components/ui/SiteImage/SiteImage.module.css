@@ -1,0 +1,4 @@
+/* Zoom comes from the --zoom set inline, so hover effects can multiply it. */
+.image {
+  transform: scale(var(--zoom, 1));
+}

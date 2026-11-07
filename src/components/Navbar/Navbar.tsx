@@ -10,24 +10,40 @@ import {
   type KeyboardEvent,
   type PointerEvent,
 } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Mail, Menu, Plus, X } from "lucide-react";
 import Button from "@/components/ui/Button/Button";
-import { InstagramIcon, WhatsAppIcon } from "@/components/ui/BrandIcons/BrandIcons";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  LinkedInIcon,
+  TikTokIcon,
+  WhatsAppIcon,
+  XIcon,
+  YouTubeIcon,
+} from "@/components/ui/BrandIcons/BrandIcons";
 import Logo from "@/components/ui/Logo/Logo";
-import { navLinks, socialLinks, type SocialLink } from "@/data/content";
+import { navLinks, type LinkItem } from "@/data/content";
+import type { SocialLink } from "@/lib/content/links";
 import { cx } from "@/lib/cx";
 import styles from "./Navbar.module.css";
 
 const socialIcons = {
   whatsapp: WhatsAppIcon,
   instagram: InstagramIcon,
+  facebook: FacebookIcon,
+  linkedin: LinkedInIcon,
+  youtube: YouTubeIcon,
+  tiktok: TikTokIcon,
+  x: XIcon,
   email: Mail,
 } satisfies Record<SocialLink["id"], unknown>;
 
-function SocialLinks({ className }: { className?: string }) {
+function SocialLinks({ links, className }: { links: SocialLink[]; className?: string }) {
   return (
     <ul className={cx(styles.socials, className)}>
-      {socialLinks.map(({ id, label, href }) => {
+      {links.map(({ id, label, href }) => {
         const Icon = socialIcons[id];
         const external = href.startsWith("http");
         return (
@@ -47,7 +63,24 @@ function SocialLinks({ className }: { className?: string }) {
   );
 }
 
-export default function Navbar() {
+type NavbarProps = {
+  /** One entry per service, shown under Services. */
+  services: LinkItem[];
+  socials: SocialLink[];
+};
+
+/** The navbar for the current page. Reads the URL, so render it inside <Suspense>. */
+export function CurrentNavbar(props: NavbarProps) {
+  return <Navbar {...props} pathname={usePathname()} />;
+}
+
+/** `pathname` highlights the current page's link; "" highlights nothing. */
+export default function Navbar({ services, socials, pathname }: NavbarProps & { pathname: string }) {
+  // The Services entry carries the service list as its dropdown.
+  const links = navLinks.map((link) =>
+    link.href === "/services" ? { ...link, children: services } : { ...link, children: undefined },
+  );
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
 
@@ -149,13 +182,13 @@ export default function Navbar() {
     <>
       <header className={styles.header}>
         <div className={styles.bar}>
-          <a href="#top" className={styles.logoLink} aria-label="Professional Waves home">
+          <Link href="/" className={styles.logoLink} aria-label="Professional Waves home">
             <Logo size={40} />
-          </a>
+          </Link>
 
           <nav aria-label="Primary" className={styles.nav}>
             <ul className={styles.links}>
-              {navLinks.map((link) =>
+              {links.map((link) =>
                 link.children ? (
                   <li
                     key={link.label}
@@ -170,6 +203,7 @@ export default function Navbar() {
                       ref={dropdownButtonRef}
                       type="button"
                       className={styles.link}
+                      data-active={pathname.startsWith(link.href)}
                       aria-expanded={servicesOpen}
                       aria-controls={dropdownId}
                       onClick={handleDropdownToggle}
@@ -179,32 +213,36 @@ export default function Navbar() {
                     </button>
                     <ul id={dropdownId} className={styles.dropdown} data-open={servicesOpen}>
                       <li>
-                        <a
+                        <Link
                           href={link.href}
                           className={cx(styles.dropdownLink, styles.dropdownAll)}
                           onClick={() => setServicesOpen(false)}
                         >
                           All services
-                        </a>
+                        </Link>
                       </li>
                       {link.children.map((child) => (
                         <li key={child.href}>
-                          <a
+                          <Link
                             href={child.href}
                             className={styles.dropdownLink}
                             onClick={() => setServicesOpen(false)}
                           >
                             {child.label}
-                          </a>
+                          </Link>
                         </li>
                       ))}
                     </ul>
                   </li>
                 ) : (
                   <li key={link.label}>
-                    <a href={link.href} className={styles.link}>
+                    <Link
+                      href={link.href}
+                      className={styles.link}
+                      aria-current={pathname === link.href ? "page" : undefined}
+                    >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ),
               )}
@@ -212,7 +250,7 @@ export default function Navbar() {
           </nav>
 
           <div className={styles.end}>
-            <SocialLinks className={styles.barSocials} />
+            <SocialLinks links={socials} className={styles.barSocials} />
             <button
               ref={menuButtonRef}
               type="button"
@@ -239,14 +277,14 @@ export default function Navbar() {
         onKeyDown={handleOverlayKeyDown}
       >
         <div className={styles.overlayTop}>
-          <a
-            href="#top"
+          <Link
+            href="/"
             className={styles.logoLink}
             aria-label="Professional Waves home"
             onClick={() => closeMenu()}
           >
             <Logo size={40} />
-          </a>
+          </Link>
           <button
             ref={closeButtonRef}
             type="button"
@@ -260,26 +298,31 @@ export default function Navbar() {
 
         <nav aria-label="Mobile">
           <ul className={styles.mobileLinks}>
-            {navLinks.map((link, index) => (
+            {links.map((link, index) => (
               <li
                 key={link.label}
                 className={styles.mobileItem}
                 style={{ "--i": index } as CSSProperties}
               >
-                <a href={link.href} className={styles.mobileLink} onClick={() => closeMenu()}>
+                <Link
+                  href={link.href}
+                  className={styles.mobileLink}
+                  aria-current={pathname === link.href ? "page" : undefined}
+                  onClick={() => closeMenu()}
+                >
                   {link.label}
-                </a>
+                </Link>
                 {link.children && (
                   <ul className={styles.mobileSub}>
                     {link.children.map((child) => (
                       <li key={child.href}>
-                        <a
+                        <Link
                           href={child.href}
                           className={styles.mobileSubLink}
                           onClick={() => closeMenu()}
                         >
                           {child.label}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -290,10 +333,10 @@ export default function Navbar() {
         </nav>
 
         <div className={styles.overlayFooter}>
-          <Button href="#contact" arrow="circle" onClick={() => closeMenu()}>
+          <Button href="/contact" arrow="circle" onClick={() => closeMenu()}>
             Let&rsquo;s Plan Your Event
           </Button>
-          <SocialLinks />
+          <SocialLinks links={socials} />
         </div>
       </div>
     </>

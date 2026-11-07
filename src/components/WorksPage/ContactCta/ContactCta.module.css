@@ -1,0 +1,46 @@
+.section {
+  padding-top: var(--section-space);
+}
+
+.inner {
+  width: min(100% - var(--gutter) * 2, var(--container));
+  margin-inline: auto;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: clamp(40px, 6vw, 64px) clamp(20px, 4vw, 48px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--surface);
+  box-shadow: 0 24px 48px -24px color-mix(in srgb, var(--bg) 90%, transparent);
+  text-align: center;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--accent) 15%, var(--surface));
+  color: var(--accent);
+}
+
+.title {
+  color: var(--accent);
+  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2rem);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.text {
+  max-width: 54ch;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
