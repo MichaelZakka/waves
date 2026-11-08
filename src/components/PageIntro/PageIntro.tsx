@@ -1,3 +1,4 @@
+import TitleMask from "@/components/ui/TitleMask/TitleMask";
 import styles from "./PageIntro.module.css";
 
 type PageIntroProps = {
@@ -17,7 +18,7 @@ export default function PageIntro({ id, eyebrow, title, text }: PageIntroProps) 
           {eyebrow}
         </p>
         <h1 id={id} className={styles.title}>
-          {title}
+          <TitleMask>{title}</TitleMask>
         </h1>
         <p className={styles.text}>{text}</p>
       </div>

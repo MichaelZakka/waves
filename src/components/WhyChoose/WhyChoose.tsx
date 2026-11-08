@@ -24,19 +24,21 @@ export default async function WhyChoose() {
             {why.cards.map(({ title, text, tag }, index) => (
               <li
                 key={index}
-                className={styles.card}
+                className={styles.item}
                 data-reveal
                 style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
               >
-                <span className={styles.number} aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 className={styles.title}>{title}</h3>
-                <p className={styles.text}>{text}</p>
-                <p className={styles.tag}>
-                  {tag}
-                  <CircleCheck size={14} aria-hidden="true" />
-                </p>
+                <div className={styles.card}>
+                  <span className={styles.number} aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className={styles.title}>{title}</h3>
+                  <p className={styles.text}>{text}</p>
+                  <p className={styles.tag}>
+                    {tag}
+                    <CircleCheck size={14} aria-hidden="true" />
+                  </p>
+                </div>
               </li>
             ))}
           </ol>

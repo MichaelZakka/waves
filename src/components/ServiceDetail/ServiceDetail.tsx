@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import Button from "@/components/ui/Button/Button";
 import SiteImage, { frameStyle } from "@/components/ui/SiteImage/SiteImage";
 import type { Service } from "@/lib/content/schema";
+import TitleMask from "@/components/ui/TitleMask/TitleMask";
 import styles from "./ServiceDetail.module.css";
 
 export default function ServiceDetail({ service }: { service: Service }) {
@@ -26,7 +27,7 @@ export default function ServiceDetail({ service }: { service: Service }) {
         <header className={styles.header}>
           {badge && <span className={styles.badge}>{badge}</span>}
           <h1 id="service-title" className={styles.title}>
-            {title}
+            <TitleMask>{title}</TitleMask>
           </h1>
           <p className={styles.subtitle}>{subtitle}</p>
         </header>
@@ -52,7 +53,9 @@ export default function ServiceDetail({ service }: { service: Service }) {
 
         <div className={styles.capabilities}>
           <p className={styles.eyebrow}>{capabilitiesEyebrow}</p>
-          <h2 className={styles.capabilitiesTitle}>Key Capabilities</h2>
+          <h2 className={styles.capabilitiesTitle} data-reveal>
+            <TitleMask>Key Capabilities</TitleMask>
+          </h2>
           <ol className={styles.grid}>
             {capabilities.map(({ title: cardTitle, text }, index) => (
               <li

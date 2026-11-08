@@ -1,5 +1,6 @@
 import SiteImage from "@/components/ui/SiteImage/SiteImage";
 import { getContent } from "@/lib/content";
+import TitleMask from "@/components/ui/TitleMask/TitleMask";
 import styles from "./AboutHero.module.css";
 
 export default async function AboutHero() {
@@ -17,7 +18,7 @@ export default async function AboutHero() {
       <div className={styles.inner}>
         <div className={styles.content}>
           <h1 id="about-hero-title" className={styles.title}>
-            {hero.title}
+            <TitleMask>{hero.title}</TitleMask>
           </h1>
           <p className={styles.tagline}>
             {hero.taglineBefore} <em>{hero.taglineHighlight}</em>

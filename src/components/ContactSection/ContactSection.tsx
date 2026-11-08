@@ -12,6 +12,19 @@ type ContactSectionProps = {
   variant?: "section" | "page";
 };
 
+/** Lets an email address wrap after the "@" on narrow screens instead of mid-word. */
+function breakAfterAt(text: string) {
+  const at = text.indexOf("@");
+  if (at === -1) return text;
+  return (
+    <>
+      {text.slice(0, at + 1)}
+      <wbr />
+      {text.slice(at + 1)}
+    </>
+  );
+}
+
 export default async function ContactSection({ variant = "section" }: ContactSectionProps) {
   const { contact, home } = await getContent();
   const copy = home.contact;
@@ -64,7 +77,7 @@ export default async function ContactSection({ variant = "section" }: ContactSec
                           rel: "noopener noreferrer",
                         })}
                       >
-                        {label}
+                        {breakAfterAt(label)}
                       </a>
                     ) : (
                       <span>{label}</span>

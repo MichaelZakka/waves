@@ -1,5 +1,6 @@
 import Button from "@/components/ui/Button/Button";
 import SiteImage from "@/components/ui/SiteImage/SiteImage";
+import TitleMask from "@/components/ui/TitleMask/TitleMask";
 import { getContent } from "@/lib/content";
 import styles from "./Hero.module.css";
 
@@ -19,7 +20,8 @@ export default async function Hero() {
       <div className={styles.inner}>
         <div className={styles.content}>
           <h1 id="hero-title" className={styles.title}>
-            <span>{hero.titleLine1}</span> <span>{hero.titleLine2}</span>
+            <TitleMask>{hero.titleLine1}</TitleMask>{" "}
+            <TitleMask delay={0.14}>{hero.titleLine2}</TitleMask>
           </h1>
           <p className={styles.subtitle}>
             <span>{hero.subtitleLine1}</span>

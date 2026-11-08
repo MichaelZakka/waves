@@ -1,0 +1,42 @@
+.mask {
+  display: block;
+  overflow: hidden;
+  /* Room for descenders so the mask doesn't clip them. */
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+/* Default: plays once on page load. */
+.inner {
+  display: block;
+  animation: slideUp 1s var(--ease-out) var(--title-delay, 0s) both;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(105%);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+/* Inside a scroll-reveal block: wait until the block is revealed (see ScrollReveal). */
+:global([data-reveal]) .inner {
+  animation: none;
+  transition: transform 1s var(--ease-out);
+  transition-delay: calc(var(--reveal-delay, 0ms) + 0.1s + var(--title-delay, 0s));
+}
+
+:global(.reveal-ready [data-reveal]:not(.is-visible)) .inner {
+  transform: translateY(105%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner,
+  :global(.reveal-ready [data-reveal]:not(.is-visible)) .inner {
+    animation: none;
+    transform: none;
+  }
+}

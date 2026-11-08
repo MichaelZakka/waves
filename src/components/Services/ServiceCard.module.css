@@ -64,7 +64,8 @@
   text-transform: none;
 }
 
-.card:hover .cta {
+/* Brightens when the card is hovered; hovering the button itself turns it black (see Button). */
+.card:hover .cta:not(:hover) {
   background-color: var(--accent-hover);
 }
 

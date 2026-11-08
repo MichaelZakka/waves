@@ -12,7 +12,7 @@ import {
 } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Mail, Menu, Plus, X } from "lucide-react";
+import { Menu, Plus, X } from "lucide-react";
 import Button from "@/components/ui/Button/Button";
 import {
   FacebookIcon,
@@ -37,7 +37,6 @@ const socialIcons = {
   youtube: YouTubeIcon,
   tiktok: TikTokIcon,
   x: XIcon,
-  email: Mail,
 } satisfies Record<SocialLink["id"], unknown>;
 
 function SocialLinks({ links, className }: { links: SocialLink[]; className?: string }) {

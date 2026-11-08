@@ -1,6 +1,7 @@
 import { CalendarDays } from "lucide-react";
 import Button from "@/components/ui/Button/Button";
 import { getContent } from "@/lib/content";
+import TitleMask from "@/components/ui/TitleMask/TitleMask";
 import styles from "./ContactCta.module.css";
 
 export default async function ContactCta() {
@@ -14,7 +15,7 @@ export default async function ContactCta() {
             <CalendarDays size={18} />
           </span>
           <h2 id="works-cta-title" className={styles.title}>
-            {cta.title}
+            <TitleMask>{cta.title}</TitleMask>
           </h2>
           <p className={styles.text}>{cta.text}</p>
           <Button href="/contact" size="sm" arrow="inline">

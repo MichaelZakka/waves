@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import SiteImage, { frameStyle } from "@/components/ui/SiteImage/SiteImage";
 import { getContent } from "@/lib/content";
+import TitleMask from "@/components/ui/TitleMask/TitleMask";
 import styles from "./Experience.module.css";
 
 export default async function Experience() {
@@ -15,7 +16,7 @@ export default async function Experience() {
             <span className={styles.underline}>{eyebrowHighlight}</span> {eyebrowRest}
           </p>
           <h2 id="experience-title" className={styles.heading}>
-            {title}
+            <TitleMask>{title}</TitleMask>
           </h2>
           <p className={styles.intro}>{intro}</p>
         </div>

@@ -29,8 +29,19 @@
   gap: 20px;
 }
 
+/* The <li> carries the scroll reveal; the inner card handles hover, so the two transforms don't fight. */
+.item {
+  position: relative;
+  display: flex;
+}
+
+.item:hover {
+  z-index: 1;
+}
+
 .card {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 14px;
   min-height: 360px;
@@ -38,11 +49,21 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background-color: var(--surface);
-  transition: border-color 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    transform 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out);
 }
 
 .card:hover {
   border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 18px 40px rgb(0 0 0 / 0.45);
+  }
 }
 
 /* Dimmed gold so the titles lead; still 3:1+ as large text. */

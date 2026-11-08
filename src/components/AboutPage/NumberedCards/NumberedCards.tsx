@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { TitleText } from "@/lib/content/schema";
+import TitleMask from "@/components/ui/TitleMask/TitleMask";
 import styles from "./NumberedCards.module.css";
 
 type NumberedCardsProps = {
@@ -19,7 +20,7 @@ export default function NumberedCards({ id, eyebrow, title, items }: NumberedCar
         <div className={styles.header} data-reveal>
           <p className={styles.eyebrow}>{eyebrow}</p>
           <h2 id={titleId} className={styles.heading}>
-            {title}
+            <TitleMask>{title}</TitleMask>
           </h2>
         </div>
 
@@ -27,15 +28,17 @@ export default function NumberedCards({ id, eyebrow, title, items }: NumberedCar
           {items.map(({ title: cardTitle, text }, index) => (
             <li
               key={index}
-              className={styles.card}
+              className={styles.item}
               data-reveal
               style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
             >
-              <span className={styles.number} aria-hidden="true">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3 className={styles.title}>{cardTitle}</h3>
-              <p className={styles.text}>{text}</p>
+              <div className={styles.card}>
+                <span className={styles.number} aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 className={styles.title}>{cardTitle}</h3>
+                <p className={styles.text}>{text}</p>
+              </div>
             </li>
           ))}
         </ol>

@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import ServiceCard from "@/components/Services/ServiceCard";
 import { getContent } from "@/lib/content";
+import TitleMask from "@/components/ui/TitleMask/TitleMask";
 import styles from "./ServicesPage.module.css";
 
 export default async function ServicesPage() {
@@ -12,7 +13,7 @@ export default async function ServicesPage() {
         <header className={styles.header}>
           <div>
             <h1 id="services-page-title" className={styles.title}>
-              {servicesPage.title}
+              <TitleMask>{servicesPage.title}</TitleMask>
             </h1>
             <p className={styles.subtitle}>{servicesPage.subtitle}</p>
           </div>

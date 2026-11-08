@@ -189,7 +189,8 @@ a.contactRow:hover {
   flex-wrap: wrap;
 }
 
-.legal li + li::before {
+/* Separator trails each item, so when the row wraps the dot stays at a line end, not the start. */
+.legal li:not(:last-child)::after {
   content: "·";
   margin-inline: 10px;
   color: var(--text-muted);

@@ -31,8 +31,11 @@
   color: var(--bg);
 }
 
+/* Turns black on hover; the gold border keeps it visible on the dark page background. */
 .primary:hover {
-  background-color: var(--accent-hover);
+  border-color: var(--accent);
+  background-color: #000;
+  color: var(--accent);
 }
 
 .outline {
@@ -98,7 +101,16 @@
   border-radius: 50%;
   background-color: var(--bg);
   color: var(--accent);
-  transition: transform 0.3s var(--ease-out);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.3s var(--ease-out);
+}
+
+/* On the black hover state the dark circle would vanish, so it flips to gold. */
+.primary:hover .circle {
+  background-color: var(--accent);
+  color: #000;
 }
 
 .sm .circle {

@@ -92,7 +92,12 @@
   min-width: 0;
   color: var(--text);
   font-size: 13px;
-  overflow-wrap: anywhere;
+  /* Only splits a word that can't fit on a line by itself; the email offers a break after "@". */
+  overflow-wrap: break-word;
+}
+
+.detail > :not(svg) {
+  min-width: 0;
 }
 
 .detailIcon {

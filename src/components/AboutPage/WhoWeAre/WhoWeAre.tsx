@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import SiteImage, { frameStyle } from "@/components/ui/SiteImage/SiteImage";
 import { getContent } from "@/lib/content";
+import TitleMask from "@/components/ui/TitleMask/TitleMask";
 import styles from "./WhoWeAre.module.css";
 
 export default async function WhoWeAre() {
@@ -12,7 +13,7 @@ export default async function WhoWeAre() {
         <div className={styles.card} data-reveal>
           <p className={styles.eyebrow}>{eyebrow}</p>
           <h2 id="who-title" className={styles.title}>
-            {title}
+            <TitleMask>{title}</TitleMask>
           </h2>
           {paragraphs.map((paragraph, index) => (
             <p key={index} className={styles.text}>

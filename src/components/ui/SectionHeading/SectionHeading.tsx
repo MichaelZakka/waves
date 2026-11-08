@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
+import TitleMask from "@/components/ui/TitleMask/TitleMask";
 import styles from "./SectionHeading.module.css";
 
 type SectionHeadingProps = {
@@ -32,7 +33,7 @@ export default function SectionHeading({
         id={id}
         className={cx(styles.title, tone === "light" && styles.light, uppercase && styles.uppercase)}
       >
-        {title}
+        <TitleMask>{title}</TitleMask>
       </h2>
       {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
     </div>

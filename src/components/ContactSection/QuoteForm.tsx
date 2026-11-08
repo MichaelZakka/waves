@@ -191,7 +191,6 @@ export default function QuoteForm({ email }: { email: string }) {
             type="text"
             autoComplete="name"
             required
-            placeholder="e.g. Masoud Al Qaq"
             className={styles.input}
             value={data.fullName}
             onChange={handleChange}

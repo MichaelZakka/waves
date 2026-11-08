@@ -22,15 +22,13 @@ export const SOCIAL_LABELS: Record<SocialPlatform, string> = {
   x: "X (Twitter)",
 };
 
-export type SocialLink = { id: SocialPlatform | "email"; label: string; href: string };
+export type SocialLink = { id: SocialPlatform; label: string; href: string };
 
-/** Social icons for the navbar: the configured platforms, then email. */
+/** Social icons for the navbar: the platforms configured under Contact in the admin. */
 export function socialLinks(contact: Contact): SocialLink[] {
-  const links: SocialLink[] = contact.socials.map(({ platform, url }) => ({
+  return contact.socials.map(({ platform, url }) => ({
     id: platform,
     label: platform === "whatsapp" ? "Chat with us on WhatsApp" : `Follow us on ${SOCIAL_LABELS[platform]}`,
     href: url,
   }));
-  if (contact.email) links.push({ id: "email", label: "Email us", href: emailHref(contact.email) });
-  return links;
 }
